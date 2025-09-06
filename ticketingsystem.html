@@ -1,0 +1,461 @@
+<html class="scroll-smooth" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta content="width=device-width, initial-scale=1" name="viewport" />
+		<title>Dark Mode Ticketing System</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<link
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			body {
+				font-family: "Inter", sans-serif;
+			}
+		</style>
+	</head>
+	<body class="bg-gray-900 text-gray-200 min-h-screen flex flex-col">
+		<header class="bg-gray-800 shadow-md">
+			<div
+				class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16"
+			>
+				<div class="flex items-center space-x-3">
+					<img
+						alt="Logo icon with letters T and S in modern style on dark background"
+						class="w-10 h-10 rounded-md"
+						height="40"
+						src="https://storage.googleapis.com/a1aa/image/202cb228-97b4-48aa-9040-d41bd75915ba.jpg"
+						width="40"
+					/>
+					<h1 class="text-2xl font-semibold tracking-wide">Ticketing System</h1>
+				</div>
+				<button
+					aria-label="Toggle dark mode"
+					class="text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+					id="darkModeToggle"
+				>
+					<i class="fas fa-moon fa-lg"> </i>
+				</button>
+			</div>
+		</header>
+		<main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+			<section class="mb-8">
+				<h2 class="text-3xl font-semibold mb-4">Tickets</h2>
+				<div class="flex flex-col space-y-4">
+					<button
+						class="self-start bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-500 focus:outline-none text-white font-semibold px-5 py-2 rounded-md shadow-md transition"
+						id="addTicketBtn"
+					>
+						<i class="fas fa-plus mr-2"> </i>
+						Add Ticket
+					</button>
+				</div>
+			</section>
+			<section>
+				<div class="overflow-x-auto rounded-lg shadow-lg">
+					<table class="min-w-full divide-y divide-gray-700">
+						<thead class="bg-gray-800">
+							<tr>
+								<th
+									class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
+									scope="col"
+								>
+									ID
+								</th>
+								<th
+									class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
+									scope="col"
+								>
+									Title
+								</th>
+								<th
+									class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
+									scope="col"
+								>
+									Description
+								</th>
+								<th
+									class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
+									scope="col"
+								>
+									Solution
+								</th>
+								<th
+									class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
+									scope="col"
+								>
+									Status
+								</th>
+								<th
+									class="px-6 py-3 text-center text-xs font-medium text-gray-400 uppercase tracking-wider"
+									scope="col"
+								>
+									Actions
+								</th>
+							</tr>
+						</thead>
+						<tbody
+							class="bg-gray-900 divide-y divide-gray-700"
+							id="ticketsTableBody"
+						>
+							<!-- Tickets will be dynamically inserted here -->
+						</tbody>
+					</table>
+				</div>
+			</section>
+		</main>
+		<!-- Modal backdrop -->
+		<div
+			class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm hidden z-40 flex items-center justify-center p-4"
+			id="modalBackdrop"
+		>
+			<div
+				aria-labelledby="modalTitle"
+				aria-modal="true"
+				class="bg-gray-800 rounded-lg max-w-lg w-full p-6 shadow-lg relative"
+				id="modal"
+				role="dialog"
+			>
+				<h3 class="text-xl font-semibold mb-4 text-gray-100" id="modalTitle">
+					Add Ticket
+				</h3>
+				<form class="space-y-4" id="ticketForm">
+					<div>
+						<label class="block text-gray-300 font-medium mb-1" for="title">
+							Title
+						</label>
+						<input
+							class="w-full rounded-md bg-gray-700 border border-gray-600 text-gray-100 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+							id="title"
+							name="title"
+							placeholder="Enter ticket title"
+							required=""
+							type="text"
+						/>
+					</div>
+					<div>
+						<label
+							class="block text-gray-300 font-medium mb-1"
+							for="description"
+						>
+							Description
+						</label>
+						<textarea
+							class="w-full rounded-md bg-gray-700 border border-gray-600 text-gray-100 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+							id="description"
+							name="description"
+							placeholder="Enter ticket description"
+							required=""
+							rows="3"
+						></textarea>
+					</div>
+					<div>
+						<label class="block text-gray-300 font-medium mb-1" for="solution">
+							Solution
+						</label>
+						<textarea
+							class="w-full rounded-md bg-gray-700 border border-gray-600 text-gray-100 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+							id="solution"
+							name="solution"
+							placeholder="Enter ticket solution"
+							rows="3"
+						></textarea>
+					</div>
+					<div>
+						<label class="block text-gray-300 font-medium mb-1" for="status">
+							Status
+						</label>
+						<select
+							class="w-full rounded-md bg-gray-700 border border-gray-600 text-gray-100 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+							id="status"
+							name="status"
+							required=""
+						>
+							<option value="Open">Open</option>
+							<option value="In Progress">In Progress</option>
+							<option value="Closed">Closed</option>
+						</select>
+					</div>
+					<div class="flex justify-end space-x-3 pt-4 border-t border-gray-700">
+						<button
+							class="px-4 py-2 rounded-md bg-gray-700 hover:bg-gray-600 text-gray-300 font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500"
+							id="cancelBtn"
+							type="button"
+						>
+							Cancel
+						</button>
+						<button
+							class="px-4 py-2 rounded-md bg-indigo-600 hover:bg-indigo-700 text-white font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500"
+							type="submit"
+						>
+							Save
+						</button>
+					</div>
+				</form>
+				<button
+					aria-label="Close modal"
+					class="absolute top-3 right-3 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+					id="modalCloseBtn"
+				>
+					<i class="fas fa-times fa-lg"> </i>
+				</button>
+			</div>
+		</div>
+		<!-- Firebase SDK -->
+		<script type="module">
+			import {initializeApp} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+			import {
+				getDatabase,
+				ref,
+				set,
+				push,
+				onValue,
+				remove,
+				update,
+				runTransaction,
+			} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
+
+			// Your Firebase config
+			const firebaseConfig = {
+				apiKey: "AIzaSyCuhEMi_ZNqOq70tlTmnHA6bNVKoq_HNrA",
+				authDomain: "ticketingsystem-16fa6.firebaseapp.com",
+				databaseURL:
+					"https://ticketingsystem-16fa6-default-rtdb.asia-southeast1.firebasedatabase.app",
+				projectId: "ticketingsystem-16fa6",
+				storageBucket: "ticketingsystem-16fa6.firebasestorage.app",
+				messagingSenderId: "127146989035",
+				appId: "1:127146989035:web:cb5e863405edd3bcc4f5ae",
+			};
+
+			// Init Firebase
+			const app = initializeApp(firebaseConfig);
+			const db = getDatabase(app);
+
+			// ===== Your existing script starts here =====
+			(() => {
+				const ticketsTableBody = document.getElementById("ticketsTableBody");
+				const addTicketBtn = document.getElementById("addTicketBtn");
+				const modalBackdrop = document.getElementById("modalBackdrop");
+				const modalTitle = document.getElementById("modalTitle");
+				const ticketForm = document.getElementById("ticketForm");
+				const cancelBtn = document.getElementById("cancelBtn");
+				const modalCloseBtn = document.getElementById("modalCloseBtn");
+				const darkModeToggle = document.getElementById("darkModeToggle");
+
+				let editTicketId = null;
+
+				// Render tickets in table
+				function renderTickets(tickets) {
+					ticketsTableBody.innerHTML = "";
+					if (!tickets || Object.keys(tickets).length === 0) {
+						const tr = document.createElement("tr");
+						const td = document.createElement("td");
+						td.colSpan = 6;
+						td.className = "px-6 py-4 text-center text-gray-500";
+						td.textContent =
+							"No tickets found. Add a new ticket to get started.";
+						tr.appendChild(td);
+						ticketsTableBody.appendChild(tr);
+						return;
+					}
+
+					Object.entries(tickets).forEach(([id, ticket]) => {
+						const tr = document.createElement("tr");
+						tr.className = "hover:bg-gray-800";
+
+						// ID
+						const tdId = document.createElement("td");
+						tdId.className =
+							"px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-400";
+						tdId.textContent = id;
+						tr.appendChild(tdId);
+
+						// Title
+						const tdTitle = document.createElement("td");
+						tdTitle.className =
+							"px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-100";
+						tdTitle.textContent = ticket.title;
+						tr.appendChild(tdTitle);
+
+						// Description
+						const tdDesc = document.createElement("td");
+						tdDesc.className =
+							"px-6 py-4 whitespace-normal max-w-xs text-sm text-gray-300";
+						tdDesc.textContent = ticket.description;
+						tr.appendChild(tdDesc);
+
+						// Solution
+						const tdSolution = document.createElement("td");
+						tdSolution.className =
+							"px-6 py-4 whitespace-normal max-w-xs text-sm text-gray-300";
+						tdSolution.textContent = ticket.solution || "";
+						tr.appendChild(tdSolution);
+
+						// Status
+						const tdStatus = document.createElement("td");
+						tdStatus.className =
+							"px-6 py-4 whitespace-nowrap text-sm font-medium";
+						let statusColor = "text-gray-400";
+						if (ticket.status === "Open") statusColor = "text-green-400";
+						else if (ticket.status === "In Progress")
+							statusColor = "text-yellow-400";
+						else if (ticket.status === "Closed") statusColor = "text-red-400";
+						tdStatus.innerHTML = `<span class="${statusColor}">${ticket.status}</span>`;
+						tr.appendChild(tdStatus);
+
+						// Actions
+						const tdActions = document.createElement("td");
+						tdActions.className =
+							"px-6 py-4 whitespace-nowrap text-center text-sm font-medium space-x-3";
+
+						// Edit button
+						const editBtn = document.createElement("button");
+						editBtn.className = "text-indigo-400 hover:text-indigo-600";
+						editBtn.innerHTML = '<i class="fas fa-edit"></i>';
+						editBtn.addEventListener("click", () => openEditModal(id, ticket));
+						tdActions.appendChild(editBtn);
+
+						// Delete button
+						const deleteBtn = document.createElement("button");
+						deleteBtn.className = "text-red-500 hover:text-red-700";
+						deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
+						deleteBtn.addEventListener("click", () => deleteTicket(id));
+						tdActions.appendChild(deleteBtn);
+
+						tr.appendChild(tdActions);
+						ticketsTableBody.appendChild(tr);
+					});
+				}
+
+				// Open modal for adding new ticket
+				function openAddModal() {
+					editTicketId = null;
+					modalTitle.textContent = "Add Ticket";
+					ticketForm.title.value = "";
+					ticketForm.description.value = "";
+					ticketForm.solution.value = "";
+					ticketForm.status.value = "Open";
+					showModal();
+				}
+
+				// Open modal for editing existing ticket
+				function openEditModal(id, ticket) {
+					editTicketId = id;
+					modalTitle.textContent = `Edit Ticket #${id}`;
+					ticketForm.title.value = ticket.title;
+					ticketForm.description.value = ticket.description;
+					ticketForm.solution.value = ticket.solution || "";
+					ticketForm.status.value = ticket.status;
+					showModal();
+				}
+
+				// Show modal
+				function showModal() {
+					modalBackdrop.classList.remove("hidden");
+					ticketForm.title.focus();
+				}
+
+				// Hide modal
+				function hideModal() {
+					modalBackdrop.classList.add("hidden");
+					editTicketId = null;
+					ticketForm.reset();
+				}
+
+				// Add or update ticket
+				function saveTicket(e) {
+					e.preventDefault();
+					const title = ticketForm.title.value.trim();
+					const description = ticketForm.description.value.trim();
+					const solution = ticketForm.solution.value.trim();
+					const status = ticketForm.status.value;
+					if (!title || !description) return;
+
+					if (editTicketId === null) {
+						// Create a numeric ID counter
+						const counterRef = ref(db, "ticketCounter");
+						// Use transaction to safely increment
+
+						runTransaction(counterRef, (currentValue) => {
+							return (currentValue || 0) + 1;
+						}).then((result) => {
+							if (result.committed) {
+								const ticketNum = result.snapshot.val();
+								const ticketId = `TCK-${ticketNum.toString().padStart(3, "0")}`;
+								set(ref(db, "tickets/" + ticketId), {
+									title,
+									description,
+									solution,
+									status,
+								});
+							}
+						});
+					} else {
+						// Update existing ticket
+						update(ref(db, "tickets/" + editTicketId), {
+							title,
+							description,
+							solution,
+							status,
+						});
+					}
+					hideModal();
+				}
+
+				// Delete ticket
+				function deleteTicket(id) {
+					if (confirm(`Are you sure you want to delete ticket #${id}?`)) {
+						remove(ref(db, "tickets/" + id));
+					}
+				}
+
+				// Dark mode toggle
+				function toggleDarkMode() {
+					if (document.documentElement.classList.contains("dark")) {
+						document.documentElement.classList.remove("dark");
+						localStorage.setItem("darkMode", "false");
+						darkModeToggle.innerHTML = '<i class="fas fa-moon fa-lg"></i>';
+					} else {
+						document.documentElement.classList.add("dark");
+						localStorage.setItem("darkMode", "true");
+						darkModeToggle.innerHTML = '<i class="fas fa-sun fa-lg"></i>';
+					}
+				}
+
+				// Init dark mode
+				function initDarkMode() {
+					const darkMode = localStorage.getItem("darkMode");
+					if (darkMode === "true") {
+						document.documentElement.classList.add("dark");
+						darkModeToggle.innerHTML = '<i class="fas fa-sun fa-lg"></i>';
+					} else {
+						document.documentElement.classList.remove("dark");
+						darkModeToggle.innerHTML = '<i class="fas fa-moon fa-lg"></i>';
+					}
+				}
+
+				// Event listeners
+				addTicketBtn.addEventListener("click", openAddModal);
+				cancelBtn.addEventListener("click", hideModal);
+				modalCloseBtn.addEventListener("click", hideModal);
+				ticketForm.addEventListener("submit", saveTicket);
+				darkModeToggle.addEventListener("click", toggleDarkMode);
+
+				// Firebase realtime sync
+				onValue(ref(db, "tickets"), (snapshot) => {
+					renderTickets(snapshot.val());
+				});
+
+				// Init app
+				function init() {
+					initDarkMode();
+				}
+				init();
+			})();
+		</script>
+	</body>
+</html>
